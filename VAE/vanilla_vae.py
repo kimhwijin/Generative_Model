@@ -82,7 +82,7 @@ class VanillaVAE(nn.Module):
     def loss_fn(self, recons, inputs, mu, log_var):
         recons_loss = F.mse_loss(recons, inputs)
         kld_loss = torch.mean(-0.5 * torch.sum(1 + log_var - mu ** 2 - log_var.exp(), dim=1), dim=0)
-        loss = recons_loss + kld_loss
+        loss = recons_loss + 0.005 * kld_loss
         return loss, recons_loss.detach(), kld_loss.detach()
 
     def generate(self, num_samples):
